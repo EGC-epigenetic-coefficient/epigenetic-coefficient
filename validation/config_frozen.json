@@ -1,0 +1,26 @@
+{
+  "absolute_tolerance": 1e-10,
+  "comparison_components": [
+    "egc_s",
+    "egc_lm",
+    "egc_ld",
+    "egc_dm_u",
+    "egc_dm_r",
+    "egc_dd",
+    "mean_burden"
+  ],
+  "comparison_pairwise": [
+    "p_lower",
+    "p_higher",
+    "rank_distance",
+    "w1",
+    "delta"
+  ],
+  "dataset_count": 20,
+  "date_frozen": "2026-07-31",
+  "master_seed": 20260730,
+  "relative_tolerance": 1e-10,
+  "r_rng_kind": "L'Ecuyer-CMRG",
+  "status": "frozen_before_dataset_generation_and_comparison",
+  "version": "0.1"
+}
