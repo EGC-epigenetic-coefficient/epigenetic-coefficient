@@ -64,7 +64,7 @@ Both must match `examples/minimal/minimal_example_expected.csv` (e.g. EGC-M = 0.
 **2. Cross-language verification (about 10 seconds)**
 
 ```bash
-./run_validation.sh          # set PYTHON=/path/to/python3 if needed
+bash run_validation.sh       # set PYTHON=/path/to/python3 if needed
 ```
 
 The script regenerates the 20 datasets from master seed 20260730 (L'Ecuyer-CMRG), checks that they
@@ -81,7 +81,7 @@ be compared with `validation/expected/`.
 **3. Exploratory pilot (about 5 minutes on one core)**
 
 ```bash
-./pilot/run_pilot.sh
+bash pilot/run_pilot.sh
 ```
 
 Settings: N = 2500 per replication, five replications per condition (null, positive and negative
@@ -96,6 +96,12 @@ gradient), 499 permutations, 499 bootstrap resamples, master seed 20260801. The 
 
 With five replications per condition the pilot checks descriptive coherence only; it does not
 estimate operating characteristics.
+
+The fields `mode = dry_run`, `scientific_results = false` and `dry_run_excluded = true` in
+`pilot/expected/run_parameters.csv` are retained legacy workflow labels. They indicate exclusion
+from the broader operating-characteristics benchmark, not that the pilot computations were
+skipped. All 15 pilot jobs were executed; the frozen outputs reproduce the descriptive
+proof-of-concept results reported in Table 5.
 
 ## Integrity
 
