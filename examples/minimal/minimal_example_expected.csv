@@ -1,0 +1,8 @@
+metric,expected_value,interpretation
+egc_dm_u,0.8888888888888889,distributional magnitude across all SES strata
+egc_dm_r,2.0,rank-calibrated magnitude equals the linear location-shift gradient
+egc_dd,1.0,all pairwise directions point toward higher burden under disadvantage
+egc_s,2.0,predicted burden is two SD higher at maximum disadvantage
+egc_lm,0.816496580927726,weighted dispersion of stratum means
+egc_ld,1.0,perfectly disadvantage-oriented linear ordering of means
+mean_burden,0.5,mandatory population-level guardrail
