@@ -1,0 +1,7 @@
+validation/results/
+pilot/output/
+examples/minimal/minimal_example_results_*.csv
+__pycache__/
+*.pyc
+.DS_Store
+.Rhistory

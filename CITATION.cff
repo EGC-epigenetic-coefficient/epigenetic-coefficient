@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the article below."
+title: "Epigenetic Coefficient (EGC): reference implementation, verification suite and pilot"
+version: 1.0.0
+date-released: 2026-10-06
+license: MIT
+authors:
+  - family-names: Marigliano
+    given-names: Piergiorgio
+    affiliation: "Department of Economics, eCampus University, Novedrate, Italy"
+  - family-names: Capunzo
+    given-names: Mario
+    affiliation: "Department of Medicine, Surgery and Dentistry \"Scuola Medica Salernitana\", University of Salerno, Italy"
+  - family-names: Aliberti
+    given-names: Silvana Mirella
+    affiliation: "Department of Medicine, Surgery and Dentistry \"Scuola Medica Salernitana\", University of Salerno, Italy"
+preferred-citation:
+  type: article
+  title: "Beyond the Socioeconomic Gradient: The Epigenetic Coefficient (EGC) as a Distribution-Sensitive Framework for Measuring Inequality in Epigenetic Ageing"
+  authors:
+    - family-names: Marigliano
+      given-names: Piergiorgio
+    - family-names: Capunzo
+      given-names: Mario
+    - family-names: Aliberti
+      given-names: Silvana Mirella
+  journal: "Life"
+  year: 2026
+  notes: "Manuscript under review (life-4583845)."
