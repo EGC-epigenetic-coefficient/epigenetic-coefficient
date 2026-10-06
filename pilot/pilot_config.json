@@ -1,0 +1,25 @@
+{
+  "study": "EGC v1.0 exploratory simulation pilot",
+  "status": "exploratory pilot; not a definitive validation",
+  "purpose": "Check on small simulated samples that the EGC responds coherently to absent, positive and negative socioeconomic gradients in EAA.",
+  "design": {
+    "condition_ids": ["C0_CORE_P1_NULL", "C1_CORE_P1_D40", "C2_CORE_P1_D40"],
+    "truth_classes": ["absent", "positive", "negative"],
+    "sample_size_per_replication": 2500,
+    "replications_per_condition": 5,
+    "jobs_total": 15,
+    "cores": 1
+  },
+  "inference": {
+    "B_permutation": 499,
+    "B_bootstrap": 499,
+    "gammas": [0.6, 0.7, 0.8],
+    "K_extrapolation": 199,
+    "alpha": 0.05
+  },
+  "reproducibility": {
+    "master_seed": 20260801,
+    "rng_kind": "L'Ecuyer-CMRG"
+  },
+  "interpretation_rule": "Descriptive coherence only. Five replications per condition are insufficient for operating-characteristic claims or formal validation."
+}
