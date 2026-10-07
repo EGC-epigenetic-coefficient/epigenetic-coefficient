@@ -36,7 +36,7 @@ burden is worse.
 R/egc_reference.R               point estimators (R)
 R/egc_inference.R               permutation test, stratified bootstrap, m-out-of-n intervals (R)
 python/egc_reference.py         independent point estimators (Python)
-examples/minimal/               two-stratum worked example with hand-calculated expected values
+examples/minimal/               three-stratum, six-observation worked examples with expected values
 validation/                     20 controlled datasets, R and Python evaluators, comparison script
 validation/expected/            frozen outputs of the verification reported in the article
 pilot/                          exploratory simulation pilot (Table 5 of the article)
@@ -52,14 +52,23 @@ MANIFEST.sha256                 SHA-256 checksums of every file in the release
 
 ## Reproducing the results
 
-**1. Minimal example**
+**1. Minimal examples**
+
+Example A is the three-stratum, six-observation linear-gradient example reported in Table 2 of the
+article. Its expected results include EGC-M = 0.8889 and EGC-S = 2.
+
+Example B uses the same three strata and six observations, with burden values −2, 2 / −1, 1 / 0, 0.
+The stratum means are all zero but their dispersions differ. Its expected results are EGC-M = 0.8889,
+EGC-S = 0, L = 0 and undefined EGC-O.
 
 ```bash
 Rscript examples/minimal/run_minimal_example_R.R
 python3 examples/minimal/run_minimal_example_python.py
 ```
 
-Both must match `examples/minimal/minimal_example_expected.csv` (e.g. EGC-M = 0.8889, EGC-S = 2).
+Both implementations evaluate Examples A and B. Their results must match
+`examples/minimal/minimal_example_expected.csv` and
+`examples/minimal/minimal_example_B_expected.csv`, respectively.
 
 **2. Cross-language verification (about 10 seconds)**
 
@@ -97,12 +106,6 @@ gradient), 499 permutations, 499 bootstrap resamples, master seed 20260801. The 
 With five replications per condition the pilot checks descriptive coherence only; it does not
 estimate operating characteristics.
 
-The fields `mode = dry_run`, `scientific_results = false` and `dry_run_excluded = true` in
-`pilot/expected/run_parameters.csv` are retained legacy workflow labels. They indicate exclusion
-from the broader operating-characteristics benchmark, not that the pilot computations were
-skipped. All 15 pilot jobs were executed; the frozen outputs reproduce the descriptive
-proof-of-concept results reported in Table 5.
-
 ## Integrity
 
 Verify the release files with:
@@ -117,6 +120,9 @@ The code implements the frozen EGC v1.0 definition. It demonstrates mathematical
 numerical reproducibility across software. Inferential calibration, biological validity and
 incremental value over established inequality measures have not been established and require
 empirical cohort data.
+
+The m-out-of-n interval functions in `R/egc_inference.R` are optional sensitivity-analysis utilities
+and were not used to produce the results reported in the article.
 
 ## License
 
