@@ -84,7 +84,7 @@ record_timed_call <- function(module, original, arguments) {
       elapsed_seconds = unname(elapsed[["elapsed"]]),
       status = if (succeeded) "PASS" else "ERROR",
       message = message_text,
-      benchmark_excluded = TRUE,
+      runtime_metadata_only = TRUE,
       stringsAsFactors = FALSE
     )
     .benchmark_timing_position <<- .benchmark_timing_position + 1L
@@ -138,8 +138,7 @@ worker <- function(index) {
       B_bootstrap = B_bootstrap,
       gammas = gammas,
       K_extrapolation = K_extrapolation,
-      alpha = 0.05,
-      dry_run_excluded = TRUE
+      alpha = 0.05
     ),
     error = function(error) list(
       replication = NULL,
@@ -167,7 +166,7 @@ worker <- function(index) {
     Ncells_max_mb = as.numeric(memory["Ncells", 7L]),
     Vcells_max_mb = as.numeric(memory["Vcells", 7L]),
     R_heap_max_mb_sum = as.numeric(memory["Ncells", 7L] + memory["Vcells", 7L]),
-    benchmark_excluded = TRUE,
+    runtime_metadata_only = TRUE,
     stringsAsFactors = FALSE
   )
   list(result = result, timings = .benchmark_timings, memory = memory_row)
@@ -210,15 +209,15 @@ write_deterministic_csv(errors, error_path)
 
 parameters <- data.frame(
   key = c(
-    "mode", "scientific_results", "master_seed", "rng_kind", "condition_ids",
+    "master_seed", "rng_kind", "condition_ids",
     "sample_sizes", "replications", "B_permutation", "B_bootstrap", "gammas",
-    "K_extrapolation", "jobs_total", "job_start", "job_end", "jobs_expected", "dry_run_excluded"
+    "K_extrapolation", "jobs_total", "job_start", "job_end", "jobs_expected"
   ),
   value = c(
-    "dry_run", "false", master_seed, "L'Ecuyer-CMRG", paste(sort(condition_ids), collapse = ";"),
+    master_seed, "L'Ecuyer-CMRG", paste(sort(condition_ids), collapse = ";"),
     paste(sort(sample_sizes), collapse = ";"), replications, B_permutation, B_bootstrap,
     paste(gammas, collapse = ";"), K_extrapolation, nrow(jobs), 1L, nrow(jobs),
-    nrow(jobs), "true"
+    nrow(jobs)
   ),
   stringsAsFactors = FALSE
 )
@@ -249,7 +248,7 @@ runtime <- data.frame(
   key = c("cores", "elapsed_seconds", "platform", "R_version", "note"),
   value = c(
     cores, format(elapsed, digits = 12), R.version$platform, R.version.string,
-    "profiled excluded benchmark; timing and memory files excluded from deterministic comparison"
+    "runtime profiling files are informational and excluded from deterministic numerical comparison"
   ),
   stringsAsFactors = FALSE
 )
@@ -257,6 +256,6 @@ write.csv(runtime, file.path(output_dir, "runtime_metadata.csv"), row.names = FA
 capture.output(sessionInfo(), file = file.path(output_dir, "session_info.txt"))
 
 cat(sprintf(
-  "COMPLETE benchmark_excluded jobs=%d completed=%d errors=%d timing_rows=%d memory_rows=%d cores=%d elapsed=%.3f seconds\n",
+  "COMPLETE exploratory_pilot jobs=%d completed=%d errors=%d timing_rows=%d memory_rows=%d cores=%d elapsed=%.3f seconds\n",
   nrow(jobs), nrow(replication), nrow(errors), nrow(timings), nrow(memory_table), cores, elapsed
 ))
