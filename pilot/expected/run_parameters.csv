@@ -1,6 +1,4 @@
 "key","value"
-"mode","dry_run"
-"scientific_results","false"
 "master_seed","20260801"
 "rng_kind","L'Ecuyer-CMRG"
 "condition_ids","C0_CORE_P1_NULL;C1_CORE_P1_D40;C2_CORE_P1_D40"
@@ -14,4 +12,3 @@
 "job_start","1"
 "job_end","15"
 "jobs_expected","15"
-"dry_run_excluded","true"
