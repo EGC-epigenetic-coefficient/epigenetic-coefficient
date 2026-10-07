@@ -183,7 +183,7 @@ egc_method_row <- function(
 
 egc_run_screening_job <- function(
     job, job_seed, B_permutation, B_bootstrap, gammas, K_extrapolation,
-    alpha = 0.05, minimum_per_group = 10L, dry_run_excluded = TRUE) {
+    alpha = 0.05, minimum_per_group = 10L) {
   module_count <- 4L + 2L * length(gammas)
   module_seeds <- egc_module_streams(job_seed, module_count)
   seed_position <- 1L
@@ -313,7 +313,6 @@ egc_run_screening_job <- function(
     bias_extrapolation = extrapolation$estimate,
     extrapolation_r_squared = extrapolation$r_squared,
     extrapolation_admissible = extrapolation$admissible,
-    dry_run_excluded = isTRUE(dry_run_excluded),
     stringsAsFactors = FALSE
   )
 
@@ -339,15 +338,14 @@ egc_run_screening_job <- function(
 
 egc_run_screening_jobs <- function(
     jobs, streams, B_permutation, B_bootstrap, gammas, K_extrapolation,
-    alpha = 0.05, cores = 1L, dry_run_excluded = TRUE) {
+    alpha = 0.05, cores = 1L) {
   if (length(streams) != nrow(jobs)) stop("stream count differs from job count")
   worker <- function(index) {
     tryCatch(
       egc_run_screening_job(
         jobs[index, , drop = FALSE], streams[[index]],
         B_permutation = B_permutation, B_bootstrap = B_bootstrap,
-        gammas = gammas, K_extrapolation = K_extrapolation, alpha = alpha,
-        dry_run_excluded = dry_run_excluded
+        gammas = gammas, K_extrapolation = K_extrapolation, alpha = alpha
       ),
       error = function(error) list(
         replication = NULL,
