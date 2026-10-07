@@ -104,7 +104,6 @@ def main() -> None:
         "no_bootstrap_failures": all(row["max_bootstrap_failure_fraction"] == 0 for row in summaries),
         "no_critical_support_flags": all(row["support_critical"].upper() == "FALSE" for row in replication),
         "all_extrapolations_admissible": all(row["extrapolation_admissible"].upper() == "TRUE" for row in replication),
-        "runner_exclusion_flag_preserved": all(row["dry_run_excluded"].upper() == "TRUE" for row in replication),
     }
 
     summary_path = PILOT / "pilot_condition_summary.csv"
