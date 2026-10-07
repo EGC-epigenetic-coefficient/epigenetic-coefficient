@@ -1,0 +1,7 @@
+id,ses_group,ses_rank,z_burden,weight
+1,G1_disadvantaged,0.0,-2.0,1.0
+2,G1_disadvantaged,0.0,2.0,1.0
+3,G2_middle,0.5,-1.0,1.0
+4,G2_middle,0.5,1.0,1.0
+5,G3_advantaged,1.0,0.0,1.0
+6,G3_advantaged,1.0,0.0,1.0
