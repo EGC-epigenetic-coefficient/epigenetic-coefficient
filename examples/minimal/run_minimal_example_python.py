@@ -13,29 +13,39 @@ assert spec.loader is not None
 sys.modules[spec.name] = module
 spec.loader.exec_module(module)
 
-with (ROOT / "minimal_example_input.csv").open(newline="", encoding="utf-8") as handle:
-    rows = list(csv.DictReader(handle))
+def run_example(example: str, input_file: str) -> list[dict[str, object]]:
+    with (ROOT / input_file).open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
 
-burden = [float(row["z_burden"]) for row in rows]
-groups = [row["ses_group"] for row in rows]
-weights = [float(row["weight"]) for row in rows]
-ranks = {row["ses_group"]: float(row["ses_rank"]) for row in rows}
-result = module.estimate_components(burden, groups, ranks, weights)
+    burden = [float(row["z_burden"]) for row in rows]
+    groups = [row["ses_group"] for row in rows]
+    weights = [float(row["weight"]) for row in rows]
+    ranks = {row["ses_group"]: float(row["ses_rank"]) for row in rows}
+    result = module.estimate_components(burden, groups, ranks, weights)
+    values = {
+        "egc_s": result.egc_s,
+        "egc_lm": result.egc_lm,
+        "egc_ld": result.egc_ld,
+        "egc_dm_u": result.egc_dm_u,
+        "egc_dm_r": result.egc_dm_r,
+        "egc_dd": result.egc_dd,
+        "mean_burden": result.mean_burden,
+    }
+    return [
+        {"example": example, "metric": metric, "value": value, "implementation": "Python"}
+        for metric, value in values.items()
+    ]
 
-values = {
-    "egc_s": result.egc_s,
-    "egc_lm": result.egc_lm,
-    "egc_ld": result.egc_ld,
-    "egc_dm_u": result.egc_dm_u,
-    "egc_dm_r": result.egc_dm_r,
-    "egc_dd": result.egc_dd,
-    "mean_burden": result.mean_burden,
-}
+
+output = run_example("A", "minimal_example_input.csv") + run_example(
+    "B", "minimal_example_B_input.csv"
+)
 with (ROOT / "minimal_example_results_python.csv").open("w", newline="", encoding="utf-8") as handle:
-    writer = csv.DictWriter(handle, fieldnames=["metric", "value", "implementation"])
+    writer = csv.DictWriter(handle, fieldnames=["example", "metric", "value", "implementation"])
     writer.writeheader()
-    for metric, value in values.items():
-        writer.writerow({"metric": metric, "value": value, "implementation": "Python"})
+    writer.writerows(output)
 
-for metric, value in values.items():
-    print(f"{metric}: {value:.17g}")
+for row in output:
+    value = row["value"]
+    rendered = "undefined" if value is None else f"{value:.17g}"
+    print(f"Example {row['example']} — {row['metric']}: {rendered}")
