@@ -1,0 +1,5 @@
+metric,expected_value,interpretation
+egc_dm_u,0.8888888888888889,distributional magnitude despite equal stratum means
+egc_s,0.0,no linear gradient because all stratum means are zero
+mean_burden,0.0,population mean burden
+egc_dd,,orientation is undefined because the orientation denominator is zero
