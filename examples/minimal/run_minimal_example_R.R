@@ -10,15 +10,23 @@ if (length(file_arg) == 1L) {
 }
 
 source(file.path(root, "..", "..", "R", "egc_reference.R"))
-data <- read.csv(file.path(root, "minimal_example_input.csv"), stringsAsFactors = FALSE)
-ranks <- tapply(data$ses_rank, data$ses_group, unique)
-result <- estimate_egc_components(data$z_burden, data$ses_group, ranks, data$weight)$components
 
-output <- data.frame(
-  metric = names(result),
-  value = as.numeric(result),
-  implementation = "R",
-  stringsAsFactors = FALSE
+run_example <- function(example, input_file) {
+  data <- read.csv(file.path(root, input_file), stringsAsFactors = FALSE)
+  ranks <- tapply(data$ses_rank, data$ses_group, unique)
+  result <- estimate_egc_components(data$z_burden, data$ses_group, ranks, data$weight)$components
+  data.frame(
+    example = example,
+    metric = names(result),
+    value = as.numeric(result),
+    implementation = "R",
+    stringsAsFactors = FALSE
+  )
+}
+
+output <- rbind(
+  run_example("A", "minimal_example_input.csv"),
+  run_example("B", "minimal_example_B_input.csv")
 )
 write.csv(output, file.path(root, "minimal_example_results_R.csv"), row.names = FALSE, quote = TRUE)
 print(output, row.names = FALSE)
